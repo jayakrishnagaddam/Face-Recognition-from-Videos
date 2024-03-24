@@ -1,25 +1,21 @@
-from flask import Flask, render_template, Response
+from flask import Flask, render_template, Response, request, redirect, flash, url_for, session
+from flask_pymongo import PyMongo
 import cv2
 import dlib
 
 app = Flask(__name__)
-
-# Load the pre-trained face detection model from dlib
+app.config['SECRET_KEY']="1234"
+app.config['MONGO_URI']="mongodb+srv://2100090162:manigaddam@deepsheild.kzgpo9p.mongodb.net/facerecognitionDB"  
+mongo=PyMongo(app)
 detector = dlib.get_frontal_face_detector()
 
-# Function to detect faces in a frame
 def detect_faces(frame):
-    # Convert the frame to grayscale
     gray_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    # Detect faces in the frame
     faces = detector(gray_frame)
-    # Draw rectangles around the detected faces
     for face in faces:
         x, y, w, h = face.left(), face.top(), face.width(), face.height()
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
     return frame
-
-# Function to read video frames
 def gen_frames():
     cap = cv2.VideoCapture('static/video.mp4')
     while cap.isOpened():
@@ -33,12 +29,51 @@ def gen_frames():
             yield (b'--frame\r\n'
                    b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
-# Route to render the HTML template
 @app.route('/')
 def index():
-    return render_template('video.html')
+    return render_template('index.html')
 
-# Route to stream video frames
+@app.route('/home')
+def home():
+    return render_template('home.html')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        email = request.form.get('email')
+        password = request.form.get('password')
+
+        user_data = mongo.db.users.find_one({'email': email, 'password': password})
+        print(user_data)
+
+        if user_data:
+            return redirect(url_for('home'))
+        else:
+            error = 'Invalid username or password'
+
+    return render_template('login.html', error=error)
+    
+    
+
+@app.route('/signup', methods=['POST', 'GET'])
+def signup():
+    if request.method == 'POST':
+        user_data = {
+            'firstname': request.form.get('firstname'),
+            'lastname': request.form.get('lastname'),
+            'email': request.form.get('email'),
+            'password': request.form.get('password')
+        }
+        mongo.db.users.insert_one(user_data)
+        flash('Account created successfully. Please log in.', 'success')
+        return redirect(url_for('login'))
+
+    return render_template('signup.html')
+
+
+
 @app.route('/video_feed')
 def video_feed():
     return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')

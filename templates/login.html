@@ -1,127 +1,74 @@
-<!-- Section: Design Block -->
-<section class="background-radial-gradient overflow-hidden">
-    {%include 'bootstrap.html'%}
-    {%include 'js.html'%}
-    <title>Login</title>
-    <style>
-      .background-radial-gradient {
-        background-color: hsl(218, 41%, 15%);
-        background-image: radial-gradient(650px circle at 0% 0%,
-            hsl(218, 41%, 35%) 15%,
-            hsl(218, 41%, 30%) 35%,
-            hsl(218, 41%, 20%) 75%,
-            hsl(218, 41%, 19%)r 80%,
-            transparent 100%),
-          radial-gradient(1250px circle at 100% 100%,
-            hsl(218, 41%, 45%) 15%,
-            hsl(218, 41%, 30%) 35%,
-            hsl(218, 41%, 20%) 75%,
-            hsl(218, 41%, 19%) 80%,
-            transparent 100%);
-      }
-  
-      #radius-shape-1 {
-        height: 220px;
-        width: 220px;
-        top: -60px;
-        left: -130px;
-        background: radial-gradient(#44006b, #ad1fff);
-        overflow: hidden;
-      }
-      #non{
-        text-decoration: none;
-      }
-      #radius-shape-2 {
-        border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
-        bottom: -60px;
-        right: -110px;
-        width: 300px;
-        height: 300px;
-        background: radial-gradient(#44006b, #ad1fff);
-        overflow: hidden;
-      }
-      .card {
-  background-color: rgba(255, 255, 255, 0.8); /* Use RGBA color to set transparency */
-  border-radius: 10px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
+  <style>
+    .bg-image-vertical {
+position: relative;
+overflow: hidden;
+background-repeat: no-repeat;
+background-position: right center;
+background-size: auto 100%;
 }
-     
-    </style>
-  <body>
-    <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
-      <div class="row gx-lg-5 align-items-center mb-5">
-        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
-          <h1 class="my-5 display-5 fw-bold ls-tight" style="color: hsl(218, 81%, 95%)">
-            Connect with us &<br />
-            <span style="color: hsl(218, 81%, 75%)">Together we make a difference...</span>
-          </h1>
-          <p class="mb-4 opacity-70" style="color: hsl(218, 81%, 85%); font-size:20px;">
-            Deepfake is a primary growing threat to the society and Social media. Together we make this world a better place to live without 
-            insecurities and lead a happy life...
-          </p>
-        </div>
-  
-        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-          <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
-          <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
-  
-          <div class="card bg-glass">
-            <div class="card-body px-4 py-5 px-md-5">
-              <form method="post">
-                <p class="text-center" style="font-size: 24x;">Login Here...</p>
-                <!-- 2 column grid layout with text inputs for the first and last names -->
-                
-                <div class="form-outline mb-4">
-                  <input type="email" id="form3Example3" class="form-control" name="email" />
-                  <label class="form-label" for="form3Example3">Email address</label>
-                </div>
-  
-                <!-- Password input -->
-<div class="form-outline mb-4">
-  <input type="password" id="form3Example4" class="form-control" name="password" />
-  <label class="form-label" for="form3Example4">Password</label>
-</div>
-  
-                <!-- Checkbox -->
-                <div class="form-check d-flex justify-content-center mb-4">
-                  <input class="form-check-input me-2" type="checkbox" value="" id="form2Example33" checked />
-                  <label class="form-check-label" for="form2Example33">
-                    Accept our mails and stay updated...
-                  </label>
-                </div>
-  
-                <!-- Submit button -->
-                <button type="submit" class="btn btn-primary btn-block mb-4">
-                  Sign In
-                </button>
-  
-                <!-- Register buttons -->
-                <div class="text-center">
-                  <p>or sign-in with:</p>
-                  <div class="mt-4">
-                    <div class="row">
-                        <div class="col-sm-6" id="non">
-                       <a id="non" href="#">Google</a>
-                       </div>
-                       <div class="col-sm-6 mb-4" id="non">
-                       <a class="text-center" id="non" href="#">Twitter</a></div>
-                    </div>
-                  </div>
-                </div>
 
-                <div class="mt-4 text-center">
-                    <p>New to Our App? <a id="non" href="#">Register Here</a></p>
-                </div>
-              </form>
-            </div>
+@media (min-width: 1025px) {
+.h-custom-2 {
+height: 100%;
+}
+}
+  </style>
+  {%include 'bootstrap.html'%}
+</head>
+<body>
+  <section class="vh-100">
+    <div class="container-fluid">
+      
+      <div class="row">
+        <div class="col-sm-6 text-black">
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <ul class="flash">
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          {% endwith %}
+          <div class="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+            
+            <form method="post">
+              <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Log in</h3>
+  
+              <div class="form-outline mb-4">
+                <input name="email" type="email" id="form2Example18" class="form-control form-control-lg" />
+                <label class="form-label" for="form2Example18">Email address</label>
+              </div>
+  
+              <div class="form-outline mb-4">
+                <input name="password" type="password" id="form2Example28" class="form-control form-control-lg" />
+                <label class="form-label" for="form2Example28">Password</label>
+              </div>
+  
+              <div class="pt-1 mb-4">
+                <button class="btn btn-info btn-lg btn-block" type="submit">Login</button>
+              </div>
+  
+              <p class="small mb-5 pb-lg-2"><a class="text-muted" href="#!">Forgot password?</a></p>
+              <p>Don't have an account? <a href="{{url_for('signup')}}" class="link-info">Register here</a></p>
+  
+            </form>
+  
           </div>
+  
+        </div>
+        <div class="col-sm-6 px-0 d-none d-sm-block">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img3.webp"
+            alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
         </div>
       </div>
     </div>
-    </body>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
   </section>
-  <!-- Section: Design Block -->
+  
+</body>
+</html>
