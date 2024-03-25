@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <style>
+        #ulid{
+            text-decoration: none;
+            position: relative;
+            left: 2%;
+        }
+        #liid{
+            font-size: 24px;
+            padding-top: 1%;
+            text-decoration: none;
+            position: relative;
+            
+
+        }
+        .content {
+      padding: 0;
+      box-sizing: border-box;
+    }
+        #image {
+      position: fixed;
+      top: 0;
+      left: 0;
+      
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+    </style>
+    {%include 'bootstrap.html'%}
+</head>
+<body>
+    <img id="image" src="static/home bg.jpg" alt="">
+    <div class="content">
+        <div bg-white text-lg-start mt-0>
+        <ul id="ulid" class="row bg-white text-lg-start mt-0">
+            <li id="liid" style="position: relative; left: 2%;" class="col lead">Upload Video</li>
+            <li id="liid" style="position: relative; left: 1%;" class="col lead">Process Video</li>
+            <li id="liid" style="position: relative; left: 1%;" class="col lead">Generate Frames</li>
+            <li id="liid" style="position: relative; left: 3%;" class="col lead">Process Frames</li>
+            <li id="liid" style="position: relative; left: 4%;" class="col lead">Detect Faces</li>
+            <li id="liid" style="position: relative; left: 4%;" class="col lead">Process Data</li>
+            <li id="liid" style="position: relative; left: 5%;" class="col lead">Result</li>
+            </ul>
+            </div>
+    </div>
+</body>
+</html>
