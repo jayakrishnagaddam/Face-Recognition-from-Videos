@@ -1,5 +1,6 @@
 from flask import Flask, render_template, Response, request, redirect, flash, url_for, session
 from flask_pymongo import PyMongo
+import os
 import cv2
 import dlib
 
@@ -16,6 +17,27 @@ def detect_faces(frame):
         x, y, w, h = face.left(), face.top(), face.width(), face.height()
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
     return frame
+
+
+@app.route('/process_image', methods=['POST'])
+def process_image():
+    video_file = request.files['video']
+    video_file.save('static/uploads/video.mp4')  # Save uploaded video
+    return redirect(url_for('detection'))
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
+
+@app.route('/detection')
+def detection():
+    return render_template('detection.html')
+
+@app.route('/videodrop')
+def videodrop():
+    return render_template('videodrop.html')
+
+
 def gen_frames():
     cap = cv2.VideoCapture('static/video.mp4')
     while cap.isOpened():
@@ -72,11 +94,6 @@ def signup():
 
     return render_template('signup.html')
 
-
-
-@app.route('/video_feed')
-def video_feed():
-    return Response(gen_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", debug=True)
