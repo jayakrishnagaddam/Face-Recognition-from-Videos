@@ -39,7 +39,7 @@ def videodrop():
 
 
 def gen_frames():
-    cap = cv2.VideoCapture('static/video.mp4')
+    cap = cv2.VideoCapture('static/uploads/video.mp4')
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:

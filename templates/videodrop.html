@@ -164,13 +164,12 @@
         <script>
             let dropArea = document.getElementById('drop-area');
             let fileElem = document.getElementById('fileElem');
-            let gallery = document.getElementById('gallery');
             let submitBtn = document.getElementById('submitBtn');
+            let gallery = document.getElementById('gallery');
         
-            // Event listeners for drag and drop functionality
+            // Simplify event listeners for drag and drop
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 dropArea.addEventListener(eventName, preventDefaults, false);
-                document.body.addEventListener(eventName, preventDefaults, false);
             });
         
             ['dragenter', 'dragover'].forEach(eventName => {
@@ -181,70 +180,67 @@
                 dropArea.addEventListener(eventName, unhighlight, false);
             });
         
+            // Handle drop
             dropArea.addEventListener('drop', handleDrop, false);
         
-            // Prevent default behavior for drag and drop events
+            // Prevent defaults
             function preventDefaults(e) {
                 e.preventDefault();
                 e.stopPropagation();
             }
         
-            // Highlight drop area when dragging over it
+            // Highlight drop area
             function highlight(e) {
                 dropArea.classList.add('highlight');
             }
         
-            // Remove highlight from drop area when dragging leaves it
+            // Unhighlight drop area
             function unhighlight(e) {
                 dropArea.classList.remove('highlight');
             }
         
-            // Handle drop event
+            // Handle drop
             function handleDrop(e) {
                 let dt = e.dataTransfer;
-                let files = dt.files || e.target.files;
+                let files = dt.files;
                 handleFiles(files);
             }
         
-           // Click event listener for drop area to trigger file input click
-dropArea.addEventListener('click', () => {
-    fileElem.click();
-});
-
-// Change event listener for file input
-fileElem.addEventListener('change', function (e) {
-    handleFiles(this.files);
-});
-
-
-            // Function to handle selected files
+            // Click event listener for file input
+            dropArea.addEventListener('click', function() {
+                fileElem.click();
+            });
+        
+            // Change event listener for file input
+            fileElem.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    handleFiles(this.files);
+                } else {
+                    displayNoFileMessage();
+                    updateSubmitButton(false);
+                }
+            });
+        
+            // Handle files
             function handleFiles(files) {
-                files = [...files];
-                gallery.innerHTML = ''; // Clear previous files
-                files.forEach(previewFile);
+                gallery.innerHTML = ''; // Clear previous content
+                [...files].forEach(displayFileName);
                 updateSubmitButton(files.length > 0);
             }
         
-            // Function to preview selected files
-            function previewFile(file) {
-                let reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onloadend = function () {
-                    if (file.type.startsWith('video/')) {
-                        let video = document.createElement('video');
-                        video.src = reader.result;
-                        video.controls = true;
-                        gallery.appendChild(video);
-                    }
-        
-                    // Display file name
-                    let fileName = document.createElement('p');
-                    fileName.textContent = file.name;
-                    gallery.appendChild(fileName);
-                }
+            // Display file name
+            function displayFileName(file) {
+                let fileName = document.createElement('p');
+                fileName.textContent = file.name;
+                gallery.appendChild(fileName);
             }
         
-            // Function to update submit button state
+            // Display "No file selected"
+            function displayNoFileMessage() {
+                gallery.innerHTML = '<p>No file selected</p>';
+            }
+        
+            // Update submit button
             function updateSubmitButton(active) {
                 if (active) {
                     submitBtn.classList.add('active');
@@ -254,13 +250,8 @@ fileElem.addEventListener('change', function (e) {
                     submitBtn.setAttribute('disabled', 'disabled');
                 }
             }
-        
-            // Function to handle submit button click
-            function submitImage() {
-                alert('Image submitted successfully!');
-            }
         </script>
-          
+        
     </div>
 </body>
 
