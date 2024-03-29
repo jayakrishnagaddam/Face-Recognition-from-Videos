@@ -1,4 +1,4 @@
-dlib
+dlib==19.22
 opencv-python
 Flask
 Flask-PyMongo
