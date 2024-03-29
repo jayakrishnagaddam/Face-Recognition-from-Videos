@@ -1,14 +1,15 @@
 [tool.poetry]
-name = "repl-html-face-recognition-using-videos"
+name = "repl-nix-profile-jayakrishna"
 version = "0.1.0"
 description = ""
-authors = ["Your Name <you@example.com>"]
+authors = ["Replit user <<>>"]
 readme = "README.md"
-packages = [{include = "repl_html_face_recognition_using_videos"}]
+packages = [{include = "repl_nix_profile_jayakrishna"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-flask = "^3.0.2"
+flask = "^3.0.0"
+flask-pymongo = "^2.3.0"
 
 
 [build-system]
