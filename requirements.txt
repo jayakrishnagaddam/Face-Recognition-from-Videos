@@ -1,5 +1,5 @@
 dlib
-cv2
+opencv-python
 Flask
 Flask-PyMongo
 gunicorn
