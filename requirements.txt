@@ -1,0 +1,5 @@
+dlib
+cv2
+Flask
+Flask-PyMongo
+gunicorn
