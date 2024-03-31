@@ -37,6 +37,9 @@ def detection():
 def videodrop():
     return render_template('videodrop.html')
 
+@app.route('/contactus')
+def contactus():
+    return render_template('contactus.html')
 
 def gen_frames():
     cap = cv2.VideoCapture('static/uploads/video.mp4')
